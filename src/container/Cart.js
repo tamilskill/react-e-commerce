@@ -3,11 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductListItem from "../components/ProductListItem";
 import { modifyItem, removeItem } from "../redux/reducer/cart";
+import ReactGA from "react-ga4";
 
 export default function Cart() {
   const list = useSelector((state) => state.cart.list);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: "/cart",
+      title: "Cart Page",
+    });
+  }, []);
 
   const incrementItem = (item) => {
     dispatch(modifyItem({ ...item, count: item.count + 1 }));
@@ -38,7 +47,12 @@ export default function Cart() {
               removeItem={() => removeItemFromCart(item)}
             />
           ))}
-          <button className="btn btn-success" onClick={() => navigate('/checkout')}>Go to Checkout</button>
+          <button
+            className="btn btn-success"
+            onClick={() => navigate("/checkout")}
+          >
+            Go to Checkout
+          </button>
         </>
       ) : (
         <h3>No items in the cart</h3>

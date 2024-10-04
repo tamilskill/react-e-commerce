@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductListItem from "../components/ProductListItem";
 import { ProductList } from "../data/ProductList";
+import ReactGA from "react-ga4";
 
 export default function Checkout() {
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: "/checkout",
+      title: "checkout Page",
+    });
+  }, []);
   const params = useParams();
   const list = useSelector((state) => state.cart.list);
   const [state, setState] = useState(
