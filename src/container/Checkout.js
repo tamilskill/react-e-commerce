@@ -71,7 +71,14 @@ export default function Checkout() {
           ))}
           <button
             className="btn btn-success"
-            onClick={() => navigate("/success")}
+            onClick={() => {
+              navigate("/success");
+              ReactGA.event({
+                category: "Place Order",
+                action: "Click",
+                label: `Place Order-${state.length}`,
+              });
+            }}
           >
             Place order
           </button>
